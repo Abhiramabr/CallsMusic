@@ -1,30 +1,26 @@
-from pyrogram import Client
+from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-from helpers.filters import command, other_filters, other_filters2
 
-
-@Client.on_message(command("start") & other_filters)
-async def start(_, message: Message):
+@Client.on_message(
+    filters.command("start")
+    & filters.private
+    & ~ filters.edited
+)
+async def start_(client: Client, message: Message):
     await message.reply_text(
-        f"""<b>👋🏻 Hi {message.from_user.first_name}!</b>
-
-I am SU Music Player, an open-source bot that lets you play music in your Telegram groups.
-
-Use the buttons below to know more about me.""",
+        f"""<b> Hey {message.from_user.first_name}!</b>
+        
+I can play music in your Telegram's voice chat.
+Use /help to know more about me.""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "⚒ Source code", url="https://t.me/SuMusicPlayer"
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        "💬 Group", url="https://t.me/su_Chats"
+                        "📞 Contact", url="https://t.me/T_r_oy"
                     ),
                     InlineKeyboardButton(
-                        "Channel 🔈", url="https://t.me/su_Bots"
+                        "🛸 Channel", url="https://t.me/Wandabetaxbot"
                     )
                 ]
             ]
@@ -32,10 +28,14 @@ Use the buttons below to know more about me.""",
     )
 
 
-@Client.on_message(command("start") & other_filters2)
-async def start2(_, message: Message):
+@Client.on_message(
+    filters.command("start")
+    & filters.group
+    & ~ filters.edited
+)
+async def start(client: Client, message: Message):
     await message.reply_text(
-        "💁🏻‍♂️ Do you want to search for a YouTube video?",
+        "<b>Click The Yes Button For Searching a Video</b>",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
